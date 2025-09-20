@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters":{ 
+        "resourceGroups": {
+            "type": "array",
+            "metadata": {
+                "description": "Name2 and Location2"
+            }
+        },
+        "resourceTags": {
+            "type": "object",
+            "metadata": {
+                "description": "Tags to be applied"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('resourceGroups')[copyIndex('rgCopy')].name]",
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2024-08-01",
+            "location": "[parameters('resourceGroups')[copyIndex('rgCopy')].location]",
+            "dependsOn": [],
+            "tags": "[parameters('resourceTags')]",
+            "copy":{
+                "name": "rgCopy",
+                "count": "[length(parameters('resourceGroups'))]"
+            }
+        }
+    ],  
+    "outputs": {}
+}
